@@ -8,7 +8,6 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [UserController::class, 'create']);
 
-Route::get('/register', [UserController::class, 'create']);
 
 Route::get('/tasks', function () {
     return view('tasks', [
@@ -50,7 +49,16 @@ Route::get('/project/{id}', function ($id) {
 });
 
 Route::get('/login', function () {
-    return view('login');
+    return view('/users/login');
 });
 
-Route::post('/users', [UserController::class, 'store']);
+
+
+Route::get('/register', [UserController::class, 'create']);
+
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+
+
+Route::post('/users/authenticate', [UserController::class, 'authenticate'])->name('users.authenticate');
+
+Route::post('/users/logout', [UserController::class, 'logout'])->name('users.logout');

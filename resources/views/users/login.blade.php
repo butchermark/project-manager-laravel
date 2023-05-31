@@ -6,18 +6,10 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <h1>Registration</h1>
-    <div>
-    <form action={{route("users.store")}} method="POST">
+  <h1>Login Page</h1>
+  <div>
+    <form action={{route("users.authenticate")}} method="POST">
       @csrf
-      <div>
-        <label for="name">
-        </label>
-        <input class="border border-gray-200 rounded p-2 " type="text" name="name" placeholder="Name" />
-        @error('name')
-        <p>{{ $message}}</p>
-        @enderror
-      </div>
       <div>
         <label for="email">
         </label>
@@ -36,12 +28,9 @@
       </div>
       <div class="mb-6">
         <button type="submit" class="bg-laravel rounded py-2 px-4">
-          Sign Up
+          Login
         </button>
       </div>
-        <div>
-          <p> Already have an account? <a href="/login">Login</a></p>
-        </div>
         </form>
     </div>
 </body>
