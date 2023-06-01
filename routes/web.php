@@ -25,7 +25,7 @@ Route::get('/task/{id}', function ($id) {
 Route::get('/users', function () {
     return view('users', [
         'heading' => "Users",
-        'users' => User::all()
+        'users' => User::orderBy('name')->get()
     ]);
 });
 
@@ -62,3 +62,7 @@ Route::post('/users', [UserController::class, 'store'])->name('users.store');
 Route::post('/users/authenticate', [UserController::class, 'authenticate'])->name('users.authenticate');
 
 Route::post('/users/logout', [UserController::class, 'logout'])->name('users.logout');
+
+Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+Route::put('/users/{user}', [UserController::class, 'suspend'])->name('users.suspend');

@@ -28,10 +28,14 @@ class UserController extends Controller
         $formFields = $request->validate([
             'name' => ['required', 'min:3'],
             'email' => ['required', 'email', Rule::unique('users', 'email')],
+            'last_login' => 'nullable',
             'password' => ['required', 'min:6']
         ]);
         $formFields['password'] = bcrypt($formFields['password']);
         User::create($formFields);
+        if ($request->header('referer') === "http://127.0.0.1:8000/users") {
+            return redirect('/users')->with('message', 'User created successfully!');
+        }
         return view('users.login')->with('message', 'User created successfully!');
     }
 
@@ -40,9 +44,12 @@ class UserController extends Controller
 
         $formFields = $request->validate([
             'email' => ['required', 'email'],
-            'password' => 'required'
+            'password' => 'required',
         ]);
+
         $user = User::where('email', $formFields['email'])->first();
+        $user->last_login = now();
+        $user->save();
         Auth::login($user);
 
         if (auth()->attempt($formFields)) {
@@ -52,5 +59,19 @@ class UserController extends Controller
         }
 
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect('/users')->with('message', 'User deleted successfully!');
+    }
+
+    public function suspend(User $user)
+    {
+
+        $user->is_suspended = true;
+        $user->save();
+        return redirect('/users')->with('message', 'User suspended successfully!');
     }
 }

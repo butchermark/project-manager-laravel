@@ -17,13 +17,15 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'last_login' => 'datetime',
+        'is_suspended' => 'boolean',
+        'is_admin' => 'boolean',
     ];
 
 
     public static function find($id)
     {
-        $users = self::all();
+        $users = self::orderBy('name')->find($id);
         foreach ($users as $user) {
             if ($user->id == $id) {
                 return $user;

@@ -24,13 +24,16 @@
 
 
 <h1>{{ $heading }}</h1>
+@include('users.modals.create')
 
 <table>
     <thead>
         <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Email Verified At</th>
+            <th>Last login</th>
+            <th>Suspended</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>        
@@ -38,7 +41,22 @@
             <tr>
                 <td><a href="/user/{{ $user->id }}">{{ $user->name }}</a></td>
                 <td>{{$user->email}}</td>
-                <td>{{$user->email_verified_at}}</td>
+                <td>{{$user->last_login}}</td>
+                <td>{{ $user->is_suspended ? 'Suspended' : 'Active' }}</td>
+                <td>
+                    <button><a href="/user/{{ $user->id }}/edit">Edit</a></button>
+                    <form action="{{ route('users.suspend', $user->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit">Suspend</button></form>
+                    
+                    <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Delete</button>
+                    </form>
+                    </form>
+                 </td>
             </tr>
         @endforeach
     </tbody>

@@ -5,5 +5,5 @@
     {{$user->email}}
 </p>
 <p>
-    {{$user->email_verified_at}}
+    {{$user->last_login}}
 </p>
