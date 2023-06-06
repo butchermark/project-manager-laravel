@@ -41,7 +41,6 @@ class UserController extends Controller
 
     public function authenticate(Request $request)
     {
-
         $formFields = $request->validate([
             'email' => ['required', 'email'],
             'password' => 'required',
@@ -57,7 +56,6 @@ class UserController extends Controller
 
             return redirect('/users')->with('message', 'You are now logged in!');
         }
-
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }
 
@@ -69,9 +67,14 @@ class UserController extends Controller
 
     public function suspend(User $user)
     {
-
         $user->is_suspended = true;
         $user->save();
         return redirect('/users')->with('message', 'User suspended successfully!');
+    }
+    public function unsuspend(User $user)
+    {
+        $user->is_suspended = false;
+        $user->save();
+        return redirect('/users')->with('message', 'User unsuspended successfully!');
     }
 }

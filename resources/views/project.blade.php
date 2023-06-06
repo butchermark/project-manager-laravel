@@ -1,3 +1,4 @@
+<x-navbar />
 <h2>
     {{$project->title}}
 </h2>

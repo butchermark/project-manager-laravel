@@ -18,11 +18,8 @@
     }
 </style>
 </head>
-
 <body>
     <x-navbar />
-
-
 <h1>{{ $heading }}</h1>
 @include('users.modals.create')
 
@@ -36,32 +33,44 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>        
+    <tbody>   
+        @unless(count($users) == 0)     
         @foreach ($users as $user)
             <tr>
                 <td><a href="/user/{{ $user->id }}">{{ $user->name }}</a></td>
                 <td>{{$user->email}}</td>
-                <td>{{$user->last_login}}</td>
+                <td>{{ $user->last_login ? $user->last_login : 'Not logged yet' }}</td>
                 <td>{{ $user->is_suspended ? 'Suspended' : 'Active' }}</td>
                 <td>
                     <button><a href="/user/{{ $user->id }}/edit">Edit</a></button>
-                    <form action="{{ route('users.suspend', $user->id) }}" method="POST">
+                    @if($user->is_suspended)
+                    <form action="{{ route('users.unsuspend', $user->id) }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <button type="submit">Suspend</button></form>
-                    
+                        <button type="submit">Unsuspend</button>
+                    </form>
+                         @else 
+                            <form action="{{ route('users.suspend', $user->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit">Suspend</button>
+                            </form>
+                    @endif
                     <form action="{{ route('users.destroy', $user->id) }}" method="POST">
                         @csrf
-                        @method('DELETE')
+                        @method('DELETE')  
                         <button type="submit">Delete</button>
-                    </form>
                     </form>
                  </td>
             </tr>
         @endforeach
+        @else
+        <tr>
+            <td colspan="2"><p>No users found</p></td>
+        </tr>
+        @endunless
     </tbody>
 </table>
 </body>
-
 </html>
 

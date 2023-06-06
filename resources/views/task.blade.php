@@ -1,3 +1,4 @@
+<x-navbar />
 <h2>
     {{$task->title}}
 </h2>

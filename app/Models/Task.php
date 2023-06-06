@@ -9,6 +9,14 @@ class Task extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title', 'description', 'status', 'user_id', 'project_id', 'is_archived'
+    ];
+
+    protected $casts = [
+        'is_archived' => 'boolean'
+    ];
+
     public static function find($id)
     {
         $tasks = self::all();

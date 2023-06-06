@@ -9,6 +9,14 @@ class Project extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title', 'description', 'status', 'is_archived'
+    ];
+
+    protected $casts = [
+        'is_archived' => 'boolean'
+    ];
+
     public static function find($id)
     {
         $projects = self::all();

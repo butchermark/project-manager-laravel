@@ -10,7 +10,9 @@ class User extends Authenticatable
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = [
+        'name', 'email', 'password'
+    ];
 
     protected $hidden = [
         'password',
@@ -25,7 +27,7 @@ class User extends Authenticatable
 
     public static function find($id)
     {
-        $users = self::orderBy('name')->find($id);
+        $users = self::all();
         foreach ($users as $user) {
             if ($user->id == $id) {
                 return $user;

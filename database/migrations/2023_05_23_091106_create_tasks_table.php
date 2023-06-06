@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('status');
+            $table->boolean('is_archived');
             $table->string('description');
             $table->timestamps();
+            $table->integer('user_id')->nullable();
+            $table->integer('project_id')->nullable();
         });
     }
 

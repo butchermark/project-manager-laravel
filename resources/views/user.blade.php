@@ -1,3 +1,4 @@
+<x-navbar />
 <h2>
     {{$user->name}}
 </h2>

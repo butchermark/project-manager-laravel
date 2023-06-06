@@ -18,8 +18,9 @@ class ProjectFactory extends Factory
     {
         return [
             'title' => fake()->title(),
-            'status' => fake()->boolean(),
+            'status' => 'No status',
             'description' => fake()->text(),
+            'is_archived' => false,
         ];
     }
 }

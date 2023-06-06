@@ -18,8 +18,11 @@ class TaskFactory extends Factory
     {
         return [
             'title' => fake()->title(),
-            'status' => fake()->boolean(),
+            'status' => 'No status',
+            'is_archived' => false,
             'description' => fake()->text(),
+            'user_id' => 0,
+            'project_id' => 0
         ];
     }
 }
